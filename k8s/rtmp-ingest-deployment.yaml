@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rtmp-ingest-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers:
+        - name: rtmp-ingest
+          image: alqutami/rtmp-hls
+          ports:
+            - containerPort: 1935
+            - containerPort: 8080

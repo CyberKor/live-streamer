@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: player-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: player
+  template:
+    metadata:
+      labels:
+        component: player
+    spec:
+#      volumes:
+#        - name: player-storage
+#          persistentVolumeClaim:
+#            claimName: player-vol-claim
+      containers:
+        - name: player
+          image: datarhei/restreamer
+          ports:
+            - containerPort: 8080
+#          volumeMounts:
+#            - mountPath: /restreamer
+#              name: player-storage
+#              subPath: db
+          env:
+            - name: PATH
+              value: /usr/loca l/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+            - name: RS_USERNAME
+              value: zumba
+            - name: RS_PASSWORD
+              value: zumba
+            - name: RS_TIMEZONE
+              value: America/New_York
+            - name: RS_INPUTSTREAM
+              value: rtmp://192.168.1.53:1935/live/test
